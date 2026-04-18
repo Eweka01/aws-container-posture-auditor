@@ -162,6 +162,44 @@ func (l *lambdaNoReservedConcurrency) Run(ctx context.Context, client *engine.AW
 	return findings, nil
 }
 
+type lambdaOversizedMemory struct{}
+
+func (l *lambdaOversizedMemory) ID() string               { return "ops.lambda.oversized_memory" }
+func (l *lambdaOversizedMemory) Name() string             { return "Lambda function allocated memory significantly exceeds usage" }
+func (l *lambdaOversizedMemory) Dimension() engine.Dimension { return engine.DimensionOps }
+
+// oversizedMemoryThresholdMB flags functions allocated over this amount with no corresponding p99 usage data.
+const oversizedMemoryThresholdMB = 512
+
+func (l *lambdaOversizedMemory) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {
+	fns, err := listLambdaFunctions(ctx, client)
+	if err != nil {
+		return nil, err
+	}
+	var findings []engine.Finding
+	for _, fn := range fns {
+		if fn.MemorySize == nil || *fn.MemorySize <= oversizedMemoryThresholdMB {
+			continue
+		}
+		allocated := *fn.MemorySize
+		findings = append(findings, engine.Finding{
+			CheckID:     l.ID(),
+			Dimension:   l.Dimension(),
+			Severity:    engine.SeverityLow,
+			Resource:    *fn.FunctionArn,
+			Region:      client.Region,
+			Title:       l.Name(),
+			Description: fmt.Sprintf("Lambda function %q is allocated %d MB. Functions over %d MB should be reviewed — over-provisioned memory inflates cost without improving performance unless the function is CPU-bound.", *fn.FunctionName, allocated, oversizedMemoryThresholdMB),
+			Remediation: "Use AWS Lambda Power Tuning to find the optimal memory setting:\n\n  https://github.com/alexcasalboni/aws-lambda-power-tuning\n\nThen update:\n  aws lambda update-function-configuration \\\n    --function-name <name> --memory-size <optimal-mb>",
+			References: []string{
+				"https://docs.aws.amazon.com/lambda/latest/dg/configuration-memory.html",
+				"https://github.com/alexcasalboni/aws-lambda-power-tuning",
+			},
+		})
+	}
+	return findings, nil
+}
+
 // ── helpers ───────────────────────────────────────────────────────────────────
 
 func listLambdaFunctions(ctx context.Context, client *engine.AWSClient) ([]lambdatypes.FunctionConfiguration, error) {
@@ -182,6 +220,7 @@ func LambdaChecks() []engine.Check {
 	return []engine.Check{
 		&lambdaNoDLQ{},
 		&lambdaDeprecatedRuntime{},
+		&lambdaOversizedMemory{},
 		&lambdaNoTracing{},
 		&lambdaNoReservedConcurrency{},
 	}
