@@ -10,3 +10,6 @@ posture-report/
 *.test
 *.out
 coverage.out
+
+# Local architecture notes (not for repo)
+ARCHITECTURE.md
