@@ -1,0 +1,52 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ACPAReadOnly",
+      "Effect": "Allow",
+      "Action": [
+        "application-autoscaling:DescribeScalableTargets",
+        "application-autoscaling:DescribeScalingActivities",
+        "application-autoscaling:DescribeScalingPolicies",
+        "cloudwatch:DescribeAlarms",
+        "cloudwatch:DescribeAlarmsForMetric",
+        "cloudwatch:GetMetricData",
+        "cloudwatch:ListMetrics",
+        "ecr:DescribeImages",
+        "ecr:DescribeRepositories",
+        "ecr:GetLifecyclePolicy",
+        "ecr:GetRepositoryPolicy",
+        "ecr:ListImages",
+        "ecs:DescribeClusters",
+        "ecs:DescribeServices",
+        "ecs:DescribeTaskDefinition",
+        "ecs:ListClusters",
+        "ecs:ListServices",
+        "ecs:ListTaskDefinitions",
+        "eks:DescribeAddon",
+        "eks:DescribeCluster",
+        "eks:DescribeNodegroup",
+        "eks:ListAddons",
+        "eks:ListClusters",
+        "eks:ListNodegroups",
+        "iam:GetPolicy",
+        "iam:GetPolicyVersion",
+        "iam:GetRole",
+        "iam:GetRolePolicy",
+        "iam:ListAttachedRolePolicies",
+        "iam:ListRolePolicies",
+        "iam:ListRoles",
+        "lambda:GetCodeSigningConfig",
+        "lambda:GetFunction",
+        "lambda:GetFunctionCodeSigningConfig",
+        "lambda:GetFunctionConcurrency",
+        "lambda:ListFunctions",
+        "logs:DescribeLogGroups",
+        "signer:GetSigningProfile",
+        "signer:ListSigningProfiles",
+        "sts:GetCallerIdentity"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

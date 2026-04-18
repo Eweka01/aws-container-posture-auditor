@@ -1,0 +1,12 @@
+# Compiled binaries
+acpa
+acpa-*
+*.exe
+
+# Output reports
+posture-report/
+
+# Go test cache
+*.test
+*.out
+coverage.out
