@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/spf13/cobra"
@@ -46,11 +47,12 @@ No data leaves your machine. No credentials are stored or logged.`,
 // ── scan ──────────────────────────────────────────────────────────────────────
 
 type scanFlags struct {
-	region    string
-	profile   string
-	engineArg string
-	outputFmt string
-	outputDir string
+	region      string
+	profile     string
+	engineArg   string
+	checkFilter string
+	outputFmt   string
+	outputDir   string
 }
 
 func newScanCmd() *cobra.Command {
@@ -67,6 +69,7 @@ func newScanCmd() *cobra.Command {
 	cmd.Flags().StringVar(&f.region, "region", "", "AWS region to scan (default: from config/env)")
 	cmd.Flags().StringVar(&f.profile, "profile", "", "AWS named profile to use")
 	cmd.Flags().StringVar(&f.engineArg, "engine", "", "Run only one engine: ops | supplychain")
+	cmd.Flags().StringVar(&f.checkFilter, "check", "", "Run only checks whose ID starts with this prefix (e.g. sc.ecr)")
 	cmd.Flags().StringVar(&f.outputFmt, "output", "", "Output format(s): terminal, json, csv, html (default: all)")
 	cmd.Flags().StringVar(&f.outputDir, "output-dir", "./posture-report", "Directory to write report files")
 
@@ -91,15 +94,26 @@ func runScan(ctx context.Context, f *scanFlags) error {
 
 	eng := engine.New(client)
 
+	var checks []engine.Check
 	switch f.engineArg {
 	case "ops":
-		registerOpsChecks(eng)
+		checks = opsChecks()
 	case "supplychain", "supply-chain", "sc":
-		registerSupplyChainChecks(eng)
+		checks = supplyChainChecks()
 	default:
-		registerOpsChecks(eng)
-		registerSupplyChainChecks(eng)
+		checks = append(opsChecks(), supplyChainChecks()...)
 	}
+
+	if f.checkFilter != "" {
+		var filtered []engine.Check
+		for _, c := range checks {
+			if strings.HasPrefix(c.ID(), f.checkFilter) {
+				filtered = append(filtered, c)
+			}
+		}
+		checks = filtered
+	}
+	eng.Register(checks...)
 
 	start := time.Now()
 	results := eng.Run(ctx)
@@ -173,18 +187,22 @@ func writeReport(dir, name string, fn func(*os.File) error) error {
 	return fn(f)
 }
 
-func registerOpsChecks(eng *engine.Engine) {
-	eng.Register(ops.ECSChecks()...)
-	eng.Register(ops.EKSChecks()...)
-	eng.Register(ops.LambdaChecks()...)
-	eng.Register(ops.ObservabilityChecks()...)
+func opsChecks() []engine.Check {
+	var c []engine.Check
+	c = append(c, ops.ECSChecks()...)
+	c = append(c, ops.EKSChecks()...)
+	c = append(c, ops.LambdaChecks()...)
+	c = append(c, ops.ObservabilityChecks()...)
+	return c
 }
 
-func registerSupplyChainChecks(eng *engine.Engine) {
-	eng.Register(supplychain.ECRSigningChecks()...)
-	eng.Register(supplychain.ImagePolicyChecks()...)
-	eng.Register(supplychain.EKSAdmissionChecks()...)
-	eng.Register(supplychain.LambdaSigningChecks()...)
+func supplyChainChecks() []engine.Check {
+	var c []engine.Check
+	c = append(c, supplychain.ECRSigningChecks()...)
+	c = append(c, supplychain.ImagePolicyChecks()...)
+	c = append(c, supplychain.EKSAdmissionChecks()...)
+	c = append(c, supplychain.LambdaSigningChecks()...)
+	return c
 }
 
 // ── checks ────────────────────────────────────────────────────────────────────
@@ -237,16 +255,7 @@ func newChecksInfoCmd() *cobra.Command {
 }
 
 func allChecks() []engine.Check {
-	var all []engine.Check
-	all = append(all, ops.ECSChecks()...)
-	all = append(all, ops.EKSChecks()...)
-	all = append(all, ops.LambdaChecks()...)
-	all = append(all, ops.ObservabilityChecks()...)
-	all = append(all, supplychain.ECRSigningChecks()...)
-	all = append(all, supplychain.ImagePolicyChecks()...)
-	all = append(all, supplychain.EKSAdmissionChecks()...)
-	all = append(all, supplychain.LambdaSigningChecks()...)
-	return all
+	return append(opsChecks(), supplyChainChecks()...)
 }
 
 func shortDim(d engine.Dimension) string {
