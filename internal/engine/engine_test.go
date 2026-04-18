@@ -20,8 +20,8 @@ type stubCheck struct {
 	err      error
 }
 
-func (s *stubCheck) ID() string                 { return s.id }
-func (s *stubCheck) Name() string               { return s.name }
+func (s *stubCheck) ID() string                  { return s.id }
+func (s *stubCheck) Name() string                { return s.name }
 func (s *stubCheck) Dimension() engine.Dimension { return s.dim }
 func (s *stubCheck) Run(_ context.Context, _ *engine.AWSClient) ([]engine.Finding, error) {
 	return s.findings, s.err

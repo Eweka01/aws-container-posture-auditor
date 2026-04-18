@@ -9,9 +9,9 @@ import (
 )
 
 type htmlData struct {
-	Report     *Report
-	ScanDate   string
-	Duration   string
+	Report      *Report
+	ScanDate    string
+	Duration    string
 	OpsFindings []engine.Finding
 	SCFindings  []engine.Finding
 	TopFindings []engine.Finding

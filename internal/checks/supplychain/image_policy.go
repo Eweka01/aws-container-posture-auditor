@@ -15,8 +15,8 @@ import (
 
 type imgMutableTags struct{}
 
-func (i *imgMutableTags) ID() string                { return "sc.img.mutable_tags" }
-func (i *imgMutableTags) Name() string              { return "ECR repository has IMMUTABLE tag policy disabled" }
+func (i *imgMutableTags) ID() string                  { return "sc.img.mutable_tags" }
+func (i *imgMutableTags) Name() string                { return "ECR repository has IMMUTABLE tag policy disabled" }
 func (i *imgMutableTags) Dimension() engine.Dimension { return engine.DimensionSupplyChain }
 
 func (i *imgMutableTags) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {
@@ -45,9 +45,13 @@ func (i *imgMutableTags) Run(ctx context.Context, client *engine.AWSClient) ([]e
 
 type imgDeploymentUsesTagNotDigest struct{}
 
-func (i *imgDeploymentUsesTagNotDigest) ID() string                { return "sc.img.deployment_uses_tag_not_digest" }
-func (i *imgDeploymentUsesTagNotDigest) Name() string              { return "Deployment pulls image by tag instead of pinned digest" }
-func (i *imgDeploymentUsesTagNotDigest) Dimension() engine.Dimension { return engine.DimensionSupplyChain }
+func (i *imgDeploymentUsesTagNotDigest) ID() string { return "sc.img.deployment_uses_tag_not_digest" }
+func (i *imgDeploymentUsesTagNotDigest) Name() string {
+	return "Deployment pulls image by tag instead of pinned digest"
+}
+func (i *imgDeploymentUsesTagNotDigest) Dimension() engine.Dimension {
+	return engine.DimensionSupplyChain
+}
 
 func (i *imgDeploymentUsesTagNotDigest) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {
 	var findings []engine.Finding
@@ -121,8 +125,8 @@ func (i *imgDeploymentUsesTagNotDigest) Run(ctx context.Context, client *engine.
 
 type imgLatestInProduction struct{}
 
-func (i *imgLatestInProduction) ID() string                { return "sc.img.latest_in_production" }
-func (i *imgLatestInProduction) Name() string              { return "Workload uses :latest tag in production" }
+func (i *imgLatestInProduction) ID() string                  { return "sc.img.latest_in_production" }
+func (i *imgLatestInProduction) Name() string                { return "Workload uses :latest tag in production" }
 func (i *imgLatestInProduction) Dimension() engine.Dimension { return engine.DimensionSupplyChain }
 
 func (i *imgLatestInProduction) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {

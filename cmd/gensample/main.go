@@ -62,8 +62,8 @@ type stub struct {
 	dim engine.Dimension
 }
 
-func (s *stub) ID() string                 { return s.id }
-func (s *stub) Name() string               { return s.id }
+func (s *stub) ID() string                  { return s.id }
+func (s *stub) Name() string                { return s.id }
 func (s *stub) Dimension() engine.Dimension { return s.dim }
 func (s *stub) Run(_ context.Context, _ *engine.AWSClient) ([]engine.Finding, error) {
 	return nil, nil

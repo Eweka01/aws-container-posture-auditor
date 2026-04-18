@@ -12,8 +12,10 @@ import (
 
 type ecrUnsignedImages struct{}
 
-func (e *ecrUnsignedImages) ID() string               { return "sc.ecr.unsigned_images" }
-func (e *ecrUnsignedImages) Name() string             { return "ECR repository contains images without Cosign signatures" }
+func (e *ecrUnsignedImages) ID() string { return "sc.ecr.unsigned_images" }
+func (e *ecrUnsignedImages) Name() string {
+	return "ECR repository contains images without Cosign signatures"
+}
 func (e *ecrUnsignedImages) Dimension() engine.Dimension { return engine.DimensionSupplyChain }
 
 func (e *ecrUnsignedImages) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {
@@ -68,8 +70,8 @@ func (e *ecrUnsignedImages) Run(ctx context.Context, client *engine.AWSClient) (
 
 type ecrNoSBOM struct{}
 
-func (e *ecrNoSBOM) ID() string               { return "sc.ecr.no_sbom" }
-func (e *ecrNoSBOM) Name() string             { return "ECR images missing attached SBOM (OCI referrer)" }
+func (e *ecrNoSBOM) ID() string                  { return "sc.ecr.no_sbom" }
+func (e *ecrNoSBOM) Name() string                { return "ECR images missing attached SBOM (OCI referrer)" }
 func (e *ecrNoSBOM) Dimension() engine.Dimension { return engine.DimensionSupplyChain }
 
 func (e *ecrNoSBOM) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {
@@ -123,8 +125,8 @@ func (e *ecrNoSBOM) Run(ctx context.Context, client *engine.AWSClient) ([]engine
 
 type ecrScanDisabled struct{}
 
-func (e *ecrScanDisabled) ID() string               { return "sc.ecr.scan_disabled" }
-func (e *ecrScanDisabled) Name() string             { return "ECR repository has image scanning disabled" }
+func (e *ecrScanDisabled) ID() string                  { return "sc.ecr.scan_disabled" }
+func (e *ecrScanDisabled) Name() string                { return "ECR repository has image scanning disabled" }
 func (e *ecrScanDisabled) Dimension() engine.Dimension { return engine.DimensionSupplyChain }
 
 func (e *ecrScanDisabled) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {
@@ -153,8 +155,10 @@ func (e *ecrScanDisabled) Run(ctx context.Context, client *engine.AWSClient) ([]
 
 type ecrNoLifecyclePolicy struct{}
 
-func (e *ecrNoLifecyclePolicy) ID() string               { return "sc.ecr.no_lifecycle_policy" }
-func (e *ecrNoLifecyclePolicy) Name() string             { return "ECR repository has no lifecycle policy (image sprawl)" }
+func (e *ecrNoLifecyclePolicy) ID() string { return "sc.ecr.no_lifecycle_policy" }
+func (e *ecrNoLifecyclePolicy) Name() string {
+	return "ECR repository has no lifecycle policy (image sprawl)"
+}
 func (e *ecrNoLifecyclePolicy) Dimension() engine.Dimension { return engine.DimensionSupplyChain }
 
 func (e *ecrNoLifecyclePolicy) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {

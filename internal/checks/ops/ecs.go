@@ -17,8 +17,8 @@ import (
 
 type ecsNoAutoscaling struct{}
 
-func (e *ecsNoAutoscaling) ID() string               { return "ops.ecs.no_autoscaling" }
-func (e *ecsNoAutoscaling) Name() string             { return "ECS service has no auto-scaling policy" }
+func (e *ecsNoAutoscaling) ID() string                  { return "ops.ecs.no_autoscaling" }
+func (e *ecsNoAutoscaling) Name() string                { return "ECS service has no auto-scaling policy" }
 func (e *ecsNoAutoscaling) Dimension() engine.Dimension { return engine.DimensionOps }
 
 func (e *ecsNoAutoscaling) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {
@@ -62,8 +62,8 @@ func (e *ecsNoAutoscaling) Run(ctx context.Context, client *engine.AWSClient) ([
 
 type ecsNoHealthCheck struct{}
 
-func (e *ecsNoHealthCheck) ID() string               { return "ops.ecs.no_health_check" }
-func (e *ecsNoHealthCheck) Name() string             { return "ECS task definition missing container health check" }
+func (e *ecsNoHealthCheck) ID() string                  { return "ops.ecs.no_health_check" }
+func (e *ecsNoHealthCheck) Name() string                { return "ECS task definition missing container health check" }
 func (e *ecsNoHealthCheck) Dimension() engine.Dimension { return engine.DimensionOps }
 
 func (e *ecsNoHealthCheck) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {
@@ -114,8 +114,8 @@ func (e *ecsNoHealthCheck) Run(ctx context.Context, client *engine.AWSClient) ([
 
 type ecsLatestImageTag struct{}
 
-func (e *ecsLatestImageTag) ID() string               { return "ops.ecs.latest_image_tag" }
-func (e *ecsLatestImageTag) Name() string             { return "ECS task definition uses :latest image tag" }
+func (e *ecsLatestImageTag) ID() string                  { return "ops.ecs.latest_image_tag" }
+func (e *ecsLatestImageTag) Name() string                { return "ECS task definition uses :latest image tag" }
 func (e *ecsLatestImageTag) Dimension() engine.Dimension { return engine.DimensionOps }
 
 func (e *ecsLatestImageTag) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {
@@ -170,8 +170,8 @@ func (e *ecsLatestImageTag) Run(ctx context.Context, client *engine.AWSClient) (
 
 type ecsNoLogging struct{}
 
-func (e *ecsNoLogging) ID() string               { return "ops.ecs.no_logging" }
-func (e *ecsNoLogging) Name() string             { return "ECS task definition has no log driver configured" }
+func (e *ecsNoLogging) ID() string                  { return "ops.ecs.no_logging" }
+func (e *ecsNoLogging) Name() string                { return "ECS task definition has no log driver configured" }
 func (e *ecsNoLogging) Dimension() engine.Dimension { return engine.DimensionOps }
 
 func (e *ecsNoLogging) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {
@@ -222,8 +222,10 @@ func (e *ecsNoLogging) Run(ctx context.Context, client *engine.AWSClient) ([]eng
 
 type ecsMissingCircuitBreaker struct{}
 
-func (e *ecsMissingCircuitBreaker) ID() string               { return "ops.ecs.missing_circuit_breaker" }
-func (e *ecsMissingCircuitBreaker) Name() string             { return "ECS service deployment lacks circuit breaker" }
+func (e *ecsMissingCircuitBreaker) ID() string { return "ops.ecs.missing_circuit_breaker" }
+func (e *ecsMissingCircuitBreaker) Name() string {
+	return "ECS service deployment lacks circuit breaker"
+}
 func (e *ecsMissingCircuitBreaker) Dimension() engine.Dimension { return engine.DimensionOps }
 
 func (e *ecsMissingCircuitBreaker) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {
@@ -259,8 +261,8 @@ func (e *ecsMissingCircuitBreaker) Run(ctx context.Context, client *engine.AWSCl
 
 type ecsSingleTaskCount struct{}
 
-func (e *ecsSingleTaskCount) ID() string               { return "ops.ecs.single_task_count" }
-func (e *ecsSingleTaskCount) Name() string             { return "ECS service has desired count = 1 (no HA)" }
+func (e *ecsSingleTaskCount) ID() string                  { return "ops.ecs.single_task_count" }
+func (e *ecsSingleTaskCount) Name() string                { return "ECS service has desired count = 1 (no HA)" }
 func (e *ecsSingleTaskCount) Dimension() engine.Dimension { return engine.DimensionOps }
 
 func (e *ecsSingleTaskCount) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {

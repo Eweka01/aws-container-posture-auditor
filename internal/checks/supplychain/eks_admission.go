@@ -20,8 +20,10 @@ var admissionControllerAddons = []string{
 
 type eksNoAdmissionController struct{}
 
-func (e *eksNoAdmissionController) ID() string                { return "sc.eks.no_admission_controller" }
-func (e *eksNoAdmissionController) Name() string              { return "EKS cluster has no admission controller enforcing signed images" }
+func (e *eksNoAdmissionController) ID() string { return "sc.eks.no_admission_controller" }
+func (e *eksNoAdmissionController) Name() string {
+	return "EKS cluster has no admission controller enforcing signed images"
+}
 func (e *eksNoAdmissionController) Dimension() engine.Dimension { return engine.DimensionSupplyChain }
 
 func (e *eksNoAdmissionController) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {
@@ -74,8 +76,10 @@ func (e *eksNoAdmissionController) Run(ctx context.Context, client *engine.AWSCl
 
 type eksNoSignatureVerification struct{}
 
-func (e *eksNoSignatureVerification) ID() string                { return "sc.eks.no_signature_verification" }
-func (e *eksNoSignatureVerification) Name() string              { return "Admission controller present but no signature verification policy" }
+func (e *eksNoSignatureVerification) ID() string { return "sc.eks.no_signature_verification" }
+func (e *eksNoSignatureVerification) Name() string {
+	return "Admission controller present but no signature verification policy"
+}
 func (e *eksNoSignatureVerification) Dimension() engine.Dimension { return engine.DimensionSupplyChain }
 
 func (e *eksNoSignatureVerification) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {

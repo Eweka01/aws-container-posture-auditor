@@ -21,8 +21,10 @@ var supportedK8sVersions = map[string]bool{
 
 type eksOutdatedVersion struct{}
 
-func (e *eksOutdatedVersion) ID() string               { return "ops.eks.outdated_version" }
-func (e *eksOutdatedVersion) Name() string             { return "EKS cluster running unsupported Kubernetes version" }
+func (e *eksOutdatedVersion) ID() string { return "ops.eks.outdated_version" }
+func (e *eksOutdatedVersion) Name() string {
+	return "EKS cluster running unsupported Kubernetes version"
+}
 func (e *eksOutdatedVersion) Dimension() engine.Dimension { return engine.DimensionOps }
 
 func (e *eksOutdatedVersion) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {
@@ -59,8 +61,8 @@ func (e *eksOutdatedVersion) Run(ctx context.Context, client *engine.AWSClient) 
 
 type eksNoManagedAddons struct{}
 
-func (e *eksNoManagedAddons) ID() string               { return "ops.eks.no_managed_addons" }
-func (e *eksNoManagedAddons) Name() string             { return "EKS cluster missing core managed add-ons" }
+func (e *eksNoManagedAddons) ID() string                  { return "ops.eks.no_managed_addons" }
+func (e *eksNoManagedAddons) Name() string                { return "EKS cluster missing core managed add-ons" }
 func (e *eksNoManagedAddons) Dimension() engine.Dimension { return engine.DimensionOps }
 
 var coreAddons = []string{"coredns", "kube-proxy", "vpc-cni"}
@@ -109,8 +111,10 @@ func (e *eksNoManagedAddons) Run(ctx context.Context, client *engine.AWSClient) 
 
 type eksPublicEndpoint struct{}
 
-func (e *eksPublicEndpoint) ID() string               { return "ops.eks.public_endpoint" }
-func (e *eksPublicEndpoint) Name() string             { return "EKS API endpoint publicly accessible without IP restriction" }
+func (e *eksPublicEndpoint) ID() string { return "ops.eks.public_endpoint" }
+func (e *eksPublicEndpoint) Name() string {
+	return "EKS API endpoint publicly accessible without IP restriction"
+}
 func (e *eksPublicEndpoint) Dimension() engine.Dimension { return engine.DimensionOps }
 
 func (e *eksPublicEndpoint) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {
@@ -144,8 +148,8 @@ func (e *eksPublicEndpoint) Run(ctx context.Context, client *engine.AWSClient) (
 
 type eksNoLogging struct{}
 
-func (e *eksNoLogging) ID() string               { return "ops.eks.no_logging" }
-func (e *eksNoLogging) Name() string             { return "EKS control plane logging disabled" }
+func (e *eksNoLogging) ID() string                  { return "ops.eks.no_logging" }
+func (e *eksNoLogging) Name() string                { return "EKS control plane logging disabled" }
 func (e *eksNoLogging) Dimension() engine.Dimension { return engine.DimensionOps }
 
 func (e *eksNoLogging) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {
@@ -187,8 +191,8 @@ func (e *eksNoLogging) Run(ctx context.Context, client *engine.AWSClient) ([]eng
 
 type eksNodeGroupSingleAZ struct{}
 
-func (e *eksNodeGroupSingleAZ) ID() string               { return "ops.eks.node_group_single_az" }
-func (e *eksNodeGroupSingleAZ) Name() string             { return "EKS node group in single AZ" }
+func (e *eksNodeGroupSingleAZ) ID() string                  { return "ops.eks.node_group_single_az" }
+func (e *eksNodeGroupSingleAZ) Name() string                { return "EKS node group in single AZ" }
 func (e *eksNodeGroupSingleAZ) Dimension() engine.Dimension { return engine.DimensionOps }
 
 func (e *eksNodeGroupSingleAZ) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {

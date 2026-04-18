@@ -12,32 +12,32 @@ import (
 
 // deprecatedRuntimes lists Lambda runtimes that are EOL or deprecated.
 var deprecatedRuntimes = map[lambdatypes.Runtime]bool{
-	lambdatypes.RuntimeNodejs:        true,
-	lambdatypes.RuntimeNodejs43:      true,
-	lambdatypes.RuntimeNodejs43edge:  true,
-	lambdatypes.RuntimeNodejs610:     true,
-	lambdatypes.RuntimeNodejs810:     true,
-	lambdatypes.RuntimeNodejs10x:     true,
-	lambdatypes.RuntimeNodejs12x:     true,
-	lambdatypes.RuntimeNodejs14x:     true,
-	lambdatypes.RuntimeNodejs16x:     true,
-	lambdatypes.RuntimePython27:      true,
-	lambdatypes.RuntimePython36:      true,
-	lambdatypes.RuntimePython37:      true,
-	lambdatypes.RuntimePython38:      true,
-	lambdatypes.RuntimeDotnetcore10:  true,
-	lambdatypes.RuntimeDotnetcore20:  true,
-	lambdatypes.RuntimeDotnetcore21:  true,
-	lambdatypes.RuntimeDotnetcore31:  true,
-	lambdatypes.RuntimeRuby25:        true,
-	lambdatypes.RuntimeJava8:         true,
-	lambdatypes.RuntimeGo1x:          true,
+	lambdatypes.RuntimeNodejs:       true,
+	lambdatypes.RuntimeNodejs43:     true,
+	lambdatypes.RuntimeNodejs43edge: true,
+	lambdatypes.RuntimeNodejs610:    true,
+	lambdatypes.RuntimeNodejs810:    true,
+	lambdatypes.RuntimeNodejs10x:    true,
+	lambdatypes.RuntimeNodejs12x:    true,
+	lambdatypes.RuntimeNodejs14x:    true,
+	lambdatypes.RuntimeNodejs16x:    true,
+	lambdatypes.RuntimePython27:     true,
+	lambdatypes.RuntimePython36:     true,
+	lambdatypes.RuntimePython37:     true,
+	lambdatypes.RuntimePython38:     true,
+	lambdatypes.RuntimeDotnetcore10: true,
+	lambdatypes.RuntimeDotnetcore20: true,
+	lambdatypes.RuntimeDotnetcore21: true,
+	lambdatypes.RuntimeDotnetcore31: true,
+	lambdatypes.RuntimeRuby25:       true,
+	lambdatypes.RuntimeJava8:        true,
+	lambdatypes.RuntimeGo1x:         true,
 }
 
 type lambdaNoDLQ struct{}
 
-func (l *lambdaNoDLQ) ID() string               { return "ops.lambda.no_dlq" }
-func (l *lambdaNoDLQ) Name() string             { return "Lambda function has no dead-letter queue" }
+func (l *lambdaNoDLQ) ID() string                  { return "ops.lambda.no_dlq" }
+func (l *lambdaNoDLQ) Name() string                { return "Lambda function has no dead-letter queue" }
 func (l *lambdaNoDLQ) Dimension() engine.Dimension { return engine.DimensionOps }
 
 func (l *lambdaNoDLQ) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {
@@ -66,8 +66,8 @@ func (l *lambdaNoDLQ) Run(ctx context.Context, client *engine.AWSClient) ([]engi
 
 type lambdaDeprecatedRuntime struct{}
 
-func (l *lambdaDeprecatedRuntime) ID() string               { return "ops.lambda.deprecated_runtime" }
-func (l *lambdaDeprecatedRuntime) Name() string             { return "Lambda function using deprecated runtime" }
+func (l *lambdaDeprecatedRuntime) ID() string                  { return "ops.lambda.deprecated_runtime" }
+func (l *lambdaDeprecatedRuntime) Name() string                { return "Lambda function using deprecated runtime" }
 func (l *lambdaDeprecatedRuntime) Dimension() engine.Dimension { return engine.DimensionOps }
 
 func (l *lambdaDeprecatedRuntime) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {
@@ -99,8 +99,8 @@ func (l *lambdaDeprecatedRuntime) Run(ctx context.Context, client *engine.AWSCli
 
 type lambdaNoTracing struct{}
 
-func (l *lambdaNoTracing) ID() string               { return "ops.lambda.no_tracing" }
-func (l *lambdaNoTracing) Name() string             { return "Lambda function has X-Ray tracing disabled" }
+func (l *lambdaNoTracing) ID() string                  { return "ops.lambda.no_tracing" }
+func (l *lambdaNoTracing) Name() string                { return "Lambda function has X-Ray tracing disabled" }
 func (l *lambdaNoTracing) Dimension() engine.Dimension { return engine.DimensionOps }
 
 func (l *lambdaNoTracing) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {
@@ -129,8 +129,10 @@ func (l *lambdaNoTracing) Run(ctx context.Context, client *engine.AWSClient) ([]
 
 type lambdaNoReservedConcurrency struct{}
 
-func (l *lambdaNoReservedConcurrency) ID() string               { return "ops.lambda.no_reserved_concurrency" }
-func (l *lambdaNoReservedConcurrency) Name() string             { return "Critical Lambda function has no reserved concurrency" }
+func (l *lambdaNoReservedConcurrency) ID() string { return "ops.lambda.no_reserved_concurrency" }
+func (l *lambdaNoReservedConcurrency) Name() string {
+	return "Critical Lambda function has no reserved concurrency"
+}
 func (l *lambdaNoReservedConcurrency) Dimension() engine.Dimension { return engine.DimensionOps }
 
 func (l *lambdaNoReservedConcurrency) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {
@@ -164,8 +166,10 @@ func (l *lambdaNoReservedConcurrency) Run(ctx context.Context, client *engine.AW
 
 type lambdaOversizedMemory struct{}
 
-func (l *lambdaOversizedMemory) ID() string               { return "ops.lambda.oversized_memory" }
-func (l *lambdaOversizedMemory) Name() string             { return "Lambda function allocated memory significantly exceeds usage" }
+func (l *lambdaOversizedMemory) ID() string { return "ops.lambda.oversized_memory" }
+func (l *lambdaOversizedMemory) Name() string {
+	return "Lambda function allocated memory significantly exceeds usage"
+}
 func (l *lambdaOversizedMemory) Dimension() engine.Dimension { return engine.DimensionOps }
 
 // oversizedMemoryThresholdMB flags functions allocated over this amount with no corresponding p99 usage data.

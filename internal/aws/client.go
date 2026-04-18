@@ -23,17 +23,17 @@ type AWSClient struct {
 	Region  string
 	Account string
 
-	mu             sync.Mutex
-	ecsClient      *ecs.Client
-	eksClient      *eks.Client
-	lambdaClient   *lambda.Client
-	ecrClient      *ecr.Client
-	cwClient       *cloudwatch.Client
-	logsClient     *cloudwatchlogs.Client
-	iamClient      *iam.Client
-	signerClient   *signer.Client
-	stsClient      *sts.Client
-	aasClient      *applicationautoscaling.Client
+	mu           sync.Mutex
+	ecsClient    *ecs.Client
+	eksClient    *eks.Client
+	lambdaClient *lambda.Client
+	ecrClient    *ecr.Client
+	cwClient     *cloudwatch.Client
+	logsClient   *cloudwatchlogs.Client
+	iamClient    *iam.Client
+	signerClient *signer.Client
+	stsClient    *sts.Client
+	aasClient    *applicationautoscaling.Client
 }
 
 func NewClient(ctx context.Context, region, profile string) (*AWSClient, error) {

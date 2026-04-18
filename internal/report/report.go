@@ -9,26 +9,26 @@ import (
 const Version = "0.1.0"
 
 type Report struct {
-	Version       string           `json:"version"`
-	Timestamp     time.Time        `json:"timestamp"`
-	AccountID     string           `json:"account_id"`
-	Region        string           `json:"region"`
-	ScanDuration  time.Duration    `json:"scan_duration_ms"`
-	Findings      []engine.Finding `json:"findings"`
-	Score         ScoreCard        `json:"score"`
-	ChecksRun     int              `json:"checks_run"`
-	ChecksFailed  int              `json:"checks_failed"`
+	Version      string           `json:"version"`
+	Timestamp    time.Time        `json:"timestamp"`
+	AccountID    string           `json:"account_id"`
+	Region       string           `json:"region"`
+	ScanDuration time.Duration    `json:"scan_duration_ms"`
+	Findings     []engine.Finding `json:"findings"`
+	Score        ScoreCard        `json:"score"`
+	ChecksRun    int              `json:"checks_run"`
+	ChecksFailed int              `json:"checks_failed"`
 }
 
 type ScoreCard struct {
-	Overall      int `json:"overall"`
-	OpsScore     int `json:"ops_reliability"`
-	SupplyChain  int `json:"supply_chain_trust"`
-	Critical     int `json:"critical"`
-	High         int `json:"high"`
-	Medium       int `json:"medium"`
-	Low          int `json:"low"`
-	Info         int `json:"info"`
+	Overall     int `json:"overall"`
+	OpsScore    int `json:"ops_reliability"`
+	SupplyChain int `json:"supply_chain_trust"`
+	Critical    int `json:"critical"`
+	High        int `json:"high"`
+	Medium      int `json:"medium"`
+	Low         int `json:"low"`
+	Info        int `json:"info"`
 }
 
 var severityWeight = map[engine.Severity]int{

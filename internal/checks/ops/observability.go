@@ -17,8 +17,10 @@ import (
 
 type obsNoLogRetention struct{}
 
-func (o *obsNoLogRetention) ID() string               { return "ops.obs.no_log_retention" }
-func (o *obsNoLogRetention) Name() string             { return "CloudWatch log group has no retention policy (infinite)" }
+func (o *obsNoLogRetention) ID() string { return "ops.obs.no_log_retention" }
+func (o *obsNoLogRetention) Name() string {
+	return "CloudWatch log group has no retention policy (infinite)"
+}
 func (o *obsNoLogRetention) Dimension() engine.Dimension { return engine.DimensionOps }
 
 func (o *obsNoLogRetention) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {
@@ -54,8 +56,8 @@ func (o *obsNoLogRetention) Run(ctx context.Context, client *engine.AWSClient) (
 
 type obsNoAlarms struct{}
 
-func (o *obsNoAlarms) ID() string               { return "ops.obs.no_alarms_on_critical" }
-func (o *obsNoAlarms) Name() string             { return "Critical resource has no CloudWatch alarms" }
+func (o *obsNoAlarms) ID() string                  { return "ops.obs.no_alarms_on_critical" }
+func (o *obsNoAlarms) Name() string                { return "Critical resource has no CloudWatch alarms" }
 func (o *obsNoAlarms) Dimension() engine.Dimension { return engine.DimensionOps }
 
 func (o *obsNoAlarms) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {
@@ -96,8 +98,10 @@ func (o *obsNoAlarms) Run(ctx context.Context, client *engine.AWSClient) ([]engi
 
 type obsContainerInsightsOff struct{}
 
-func (o *obsContainerInsightsOff) ID() string               { return "ops.obs.container_insights_off" }
-func (o *obsContainerInsightsOff) Name() string             { return "Container Insights disabled on ECS/EKS cluster" }
+func (o *obsContainerInsightsOff) ID() string { return "ops.obs.container_insights_off" }
+func (o *obsContainerInsightsOff) Name() string {
+	return "Container Insights disabled on ECS/EKS cluster"
+}
 func (o *obsContainerInsightsOff) Dimension() engine.Dimension { return engine.DimensionOps }
 
 func (o *obsContainerInsightsOff) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {

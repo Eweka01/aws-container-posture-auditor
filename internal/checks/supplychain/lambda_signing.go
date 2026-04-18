@@ -11,8 +11,10 @@ import (
 
 type lambdaNoCodeSigning struct{}
 
-func (l *lambdaNoCodeSigning) ID() string                { return "sc.lambda.no_code_signing" }
-func (l *lambdaNoCodeSigning) Name() string              { return "Lambda function has no AWS Signer code signing configuration" }
+func (l *lambdaNoCodeSigning) ID() string { return "sc.lambda.no_code_signing" }
+func (l *lambdaNoCodeSigning) Name() string {
+	return "Lambda function has no AWS Signer code signing configuration"
+}
 func (l *lambdaNoCodeSigning) Dimension() engine.Dimension { return engine.DimensionSupplyChain }
 
 func (l *lambdaNoCodeSigning) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {
@@ -46,8 +48,10 @@ func (l *lambdaNoCodeSigning) Run(ctx context.Context, client *engine.AWSClient)
 
 type lambdaSigningNotEnforced struct{}
 
-func (l *lambdaSigningNotEnforced) ID() string                { return "sc.lambda.signing_not_enforced" }
-func (l *lambdaSigningNotEnforced) Name() string              { return "Lambda code signing present but not enforced (warn-only)" }
+func (l *lambdaSigningNotEnforced) ID() string { return "sc.lambda.signing_not_enforced" }
+func (l *lambdaSigningNotEnforced) Name() string {
+	return "Lambda code signing present but not enforced (warn-only)"
+}
 func (l *lambdaSigningNotEnforced) Dimension() engine.Dimension { return engine.DimensionSupplyChain }
 
 func (l *lambdaSigningNotEnforced) Run(ctx context.Context, client *engine.AWSClient) ([]engine.Finding, error) {
