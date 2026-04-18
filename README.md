@@ -1,5 +1,10 @@
 # AWS Container Posture Auditor (`acpa`)
 
+[![Go Version](https://img.shields.io/badge/go-1.22+-blue)](https://golang.org)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/Eweka01/aws-container-posture-auditor)](https://github.com/Eweka01/aws-container-posture-auditor/releases)
+[![CI](https://github.com/Eweka01/aws-container-posture-auditor/actions/workflows/ci.yml/badge.svg)](https://github.com/Eweka01/aws-container-posture-auditor/actions/workflows/ci.yml)
+
 A free, open-source CLI that scans your AWS account **read-only** and produces an executive-readable posture report across two dimensions: **operational reliability** and **supply chain trust**.
 
 > **No data leaves your machine.** The binary runs entirely locally, uses the standard AWS credential chain, and never stores or transmits your credentials.
