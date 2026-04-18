@@ -32,7 +32,6 @@ type AWSClient struct {
 	logsClient   *cloudwatchlogs.Client
 	iamClient    *iam.Client
 	signerClient *signer.Client
-	stsClient    *sts.Client
 	aasClient    *applicationautoscaling.Client
 }
 
