@@ -1,6 +1,6 @@
 # Compiled binaries
-acpa
-acpa-*
+/acpa
+/acpa-*
 *.exe
 
 # Output reports

@@ -84,16 +84,9 @@ func runScan(ctx context.Context, f *scanFlags) error {
 		}
 	}
 
-	fmt.Printf("\nAWS Container Posture Auditor v%s\n", version)
-	fmt.Printf("Scanning region: %s\n", f.region)
-
 	client, err := awsclient.NewClient(ctx, f.region, f.profile)
 	if err != nil {
 		return fmt.Errorf("failed to initialize AWS client: %w", err)
-	}
-
-	if client.Account != "" {
-		fmt.Printf("Account ID: %s\n\n", client.Account)
 	}
 
 	eng := engine.New(client)
