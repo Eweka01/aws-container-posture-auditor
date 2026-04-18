@@ -134,9 +134,11 @@ func runScan(ctx context.Context, f *scanFlags) error {
 	writeCSV := fmts == "" || fmts == "csv"
 
 	if writeHTML || writeJSON || writeCSV {
-		if err := os.MkdirAll(f.outputDir, 0755); err != nil {
+		outDir := filepath.Clean(f.outputDir)
+		if err := os.MkdirAll(outDir, 0750); err != nil {
 			return fmt.Errorf("failed to create output directory: %w", err)
 		}
+		f.outputDir = outDir
 	}
 
 	if writeJSON {
