@@ -53,6 +53,7 @@ type scanFlags struct {
 	checkFilter string
 	outputFmt   string
 	outputDir   string
+	quiet       bool
 }
 
 func newScanCmd() *cobra.Command {
@@ -72,6 +73,7 @@ func newScanCmd() *cobra.Command {
 	cmd.Flags().StringVar(&f.checkFilter, "check", "", "Run only checks whose ID starts with this prefix (e.g. sc.ecr)")
 	cmd.Flags().StringVar(&f.outputFmt, "output", "", "Output format(s): terminal, json, csv, html (default: all)")
 	cmd.Flags().StringVar(&f.outputDir, "output-dir", "./posture-report", "Directory to write report files")
+	cmd.Flags().BoolVar(&f.quiet, "quiet", false, "Suppress terminal output (useful in CI when writing file outputs)")
 
 	return cmd
 }
@@ -121,8 +123,9 @@ func runScan(ctx context.Context, f *scanFlags) error {
 
 	r := report.Build(results, client.Account, f.region, duration)
 
-	// Always print terminal summary
-	report.RenderTerminal(r, os.Stdout)
+	if !f.quiet {
+		report.RenderTerminal(r, os.Stdout)
+	}
 
 	// Write file outputs
 	fmts := f.outputFmt
